@@ -83,7 +83,7 @@ function App() {
   return (
     <div>
       <Auth />
-      // details
+      {/* details */}
       <div>
         <input
           placeholder="Movie name"
@@ -107,7 +107,7 @@ function App() {
         <button onClick={() => uploadFile()}>Upload file</button>
         <br />
       </div>
-      // display the movie details from the firestore
+      {/*  display the movie details from the firestore */}
       <div>
         {movieList.map((movie) => (
           <div>
