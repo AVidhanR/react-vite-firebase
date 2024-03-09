@@ -21,6 +21,8 @@ function App() {
   const [fileUpload, setFileUpload] = useState(null);
 
   const moviesCollectionRef = collection(db, "examples");
+
+  // fetching the data from the db
   const getMovieList = async () => {
     try {
       const data = await getDocs(moviesCollectionRef);
@@ -35,16 +37,19 @@ function App() {
     }
   };
 
+  // Delete a movie
   const deleteMovie = async (id) => {
     const movieDoc = doc(db, "examples", id);
     await deleteDoc(movieDoc);
   };
 
+  //Update the movie title
   const updateMovie = async (id) => {
     const movieDoc = doc(db, "examples", id);
     await updateDoc(movieDoc, { title: updatedTitle });
   };
 
+  //Upload an image or a file
   const uploadFile = async () => {
     if (!fileUpload) return;
     const fileUploadRef = ref(storage, `projectFiles/${fileUpload.name}`);
@@ -55,10 +60,12 @@ function App() {
     }
   };
 
+  //Need to run only once every time the site launched or so
   useEffect(() => {
     getMovieList();
   }, []);
 
+  //On submitting the movie details it should be uploaded to the firestore
   const onSubmitMovie = async () => {
     try {
       await addDoc(moviesCollectionRef, {
@@ -76,6 +83,7 @@ function App() {
   return (
     <div>
       <Auth />
+      // details
       <div>
         <input
           placeholder="Movie name"
@@ -99,6 +107,7 @@ function App() {
         <button onClick={() => uploadFile()}>Upload file</button>
         <br />
       </div>
+      // display the movie details from the firestore
       <div>
         {movieList.map((movie) => (
           <div>
